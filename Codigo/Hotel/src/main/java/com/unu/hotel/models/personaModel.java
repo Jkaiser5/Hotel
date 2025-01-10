@@ -2,16 +2,17 @@ package com.unu.hotel.models;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.unu.hotel.beans.persona;
 
-public class clienteModel extends conexion{
+public class personaModel extends conexion{
 	CallableStatement cs;
 	ResultSet rs;
 	
-	public List<persona> buscarPersona(){
+	public List<persona> listarPersona(){
 		try {
 			List<persona> Listar = new ArrayList<>();
 			String sql = "call sp_buscarPersona()";
@@ -25,12 +26,19 @@ public class clienteModel extends conexion{
 				Persona.setNombre(rs.getNString("nombre"));
 				Persona.setApMat(rs.getNString("apPat"));
 				Persona.setApMat(rs.getNString("apMat"));
-				Persona.setDireccion(rs.getNString("telefono"));
+				Persona.setDireccion(rs.getNString("direccion"));
 				Persona.setTelefono(rs.getNString("telefono"));				
+				Listar.add(Persona);
 			}
+			this.cerrarConexion();
 		} catch (Exception e) {
+			e.printStackTrace();
+			this.cerrarConexion();
+			return null;
 			// TODO: handle exception
 		}
 	}
+	
+	
 	
 }
